@@ -27,6 +27,13 @@ To get started with the application, follow these steps:
 4. Build the project with Maven using the command: `mvn clean install`.
 5. Launch the application with the command: `mvn spring-boot:run`.
 
+**Note**: To interact with the application, ensure that you use basic authentication for every endpoint. For testing purposes, you can use the following credentials:
+
+- Username: user
+- Password: password
+
+Please make sure to include these credentials when making requests to the API.
+
 ## Asynchronous Processing
 
 The application leverages asynchronous processing for both import and export operations to ensure responsiveness and scalability. Here's how it works:
