@@ -1,0 +1,23 @@
+server:
+  port: 8081
+
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:postgresql://localhost:5432/coding_task_database
+    username: coding_task_user
+    password: coding_task
+    driverClassName: org.postgresql.Driver
+  liquibase:
+    url: jdbc:postgresql://localhost:5432/coding_task_database
+    user: coding_task_user
+    password: coding_task
+
+
+exported:
+  file:
+    directory: "src/main/resources/export"
