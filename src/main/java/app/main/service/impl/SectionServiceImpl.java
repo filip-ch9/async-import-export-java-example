@@ -9,23 +9,20 @@ import app.main.repository.SectionRepository;
 import app.main.service.SectionService;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import org.springframework.stereotype.Component;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import static app.main.converter.ConvertToEntity.convertSectionToVO;
 import static app.main.converter.ConvertToDTO.convertSectionWithGeologicalClasListToDto;
 
-@Component
+@Service
+@RequiredArgsConstructor
 public class SectionServiceImpl implements SectionService {
 
     private final SectionRepository sectionRepository;
     private final GeologicalClassRepository geologicalClassRepository;
 
-    public SectionServiceImpl(SectionRepository sectionRepository,
-                              GeologicalClassRepository geologicalClassRepository) {
-        this.sectionRepository = sectionRepository;
-        this.geologicalClassRepository = geologicalClassRepository;
-    }
-
+    @Override
     public CompletableFuture<SectionDTO> getSection(Long id) {
         return CompletableFuture.supplyAsync(() -> sectionRepository.getSectionsById(id))
                 .thenApply(ConvertToDTO::convertSectionToDto);
@@ -35,7 +32,7 @@ public class SectionServiceImpl implements SectionService {
         return CompletableFuture.supplyAsync(() -> sectionRepository.findAllByGeologicalClasses(code))
                 .thenApply(ConvertToDTO::convertListToSectionDto);
     }
-
+    @Override
     public CompletableFuture<SectionDTO> saveSection(SectionDTO sectionDTO) {
         return CompletableFuture.supplyAsync(() -> {
             Section section = sectionRepository.save(convertSectionToVO(sectionDTO));
@@ -53,7 +50,7 @@ public class SectionServiceImpl implements SectionService {
             return convertSectionWithGeologicalClasListToDto(section, list);
         });
     }
-
+    @Override
     public CompletableFuture<SectionDTO> updateSection(Long sectionId, SectionDTO sectionDTO) {
         return CompletableFuture.supplyAsync(() -> {
             Section section = sectionRepository.getSectionsById(sectionId);
@@ -64,7 +61,7 @@ public class SectionServiceImpl implements SectionService {
             return sectionRepository.save(section);
         }).thenApply(ConvertToDTO::convertSectionToDto);
     }
-
+    @Override
     public CompletableFuture<Boolean> deleteSection(Long sectionId) {
         return CompletableFuture.supplyAsync(() -> {
             sectionRepository.deleteById(sectionId);

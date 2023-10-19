@@ -31,7 +31,7 @@ dependencies {
 
 	runtimeOnly("org.postgresql:postgresql")
 	//api docs
-	implementation("org.springdoc:springdoc-openapi-webflux-ui:1.6.12")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")

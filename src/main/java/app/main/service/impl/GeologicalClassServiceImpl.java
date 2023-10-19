@@ -8,28 +8,24 @@ import app.main.repository.SectionRepository;
 import app.main.service.GeologicalClassService;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
-import org.springframework.stereotype.Component;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import static app.main.converter.ConvertToEntity.convertToGeologicalClassToVO;
 
-@Component
+@Service
+@RequiredArgsConstructor
 public class GeologicalClassServiceImpl implements GeologicalClassService {
 
     private final GeologicalClassRepository geologicalClassRepository;
     private final SectionRepository sectionRepository;
-
-    public GeologicalClassServiceImpl(GeologicalClassRepository geologicalClassRepository,
-                                      SectionRepository sectionRepository) {
-        this.geologicalClassRepository = geologicalClassRepository;
-        this.sectionRepository = sectionRepository;
-    }
-
+    @Override
     public CompletableFuture<GeologicalClassDTO> getGeologicalClassById(Long geologicalClassId) {
         return CompletableFuture.supplyAsync(() ->
             geologicalClassRepository.getGeologicalClassById(geologicalClassId)
         ).thenApply(ConvertToDTO::convertGeologicalClassToDto);
     }
-
+    @Override
     public CompletableFuture<GeologicalClassDTO> createGeologicalClass(GeologicalClassDTO geologicalClassDTO) {
         return CompletableFuture.supplyAsync(() -> {
             GeologicalClass geologicalClass = convertToGeologicalClassToVO(geologicalClassDTO);

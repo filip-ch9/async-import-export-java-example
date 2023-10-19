@@ -7,23 +7,24 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Configuration
-@EnableAsync
-public class AsyncConfig implements WebMvcConfigurer {
+//@Configuration
+//@EnableAsync
+//public class AsyncConfig implements WebMvcConfigurer {
+//
+//  @Override
+//  public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
+//
+//    configurer.setTaskExecutor(mvcTaskExecutor());
 
-  @Override
-  public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
-
-    configurer.setTaskExecutor(mvcTaskExecutor());
-    configurer.setDefaultTimeout(30000);
-  }
-
-  @Bean
-  public ThreadPoolTaskExecutor mvcTaskExecutor() {
-
-    ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
-    threadPoolTaskExecutor.setCorePoolSize(10);
-    threadPoolTaskExecutor.setThreadNamePrefix("mvc-task-");
-    return threadPoolTaskExecutor;
-  }
-}
+//    configurer.setDefaultTimeout(30000);
+//  }
+//
+//  @Bean
+//  public ThreadPoolTaskExecutor mvcTaskExecutor() {
+//
+//    ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
+//    threadPoolTaskExecutor.setCorePoolSize(10);
+//    threadPoolTaskExecutor.setThreadNamePrefix("mvc-task-");
+//    return threadPoolTaskExecutor;
+//  }
+//}

@@ -21,6 +21,6 @@ public interface ExportEndpoint {
     CompletionStage<ParsingResultDTO> getExportStatus(@PathVariable("id") Long jobId);
 
     @Operation(summary = "Download excel file", description = "Download the excel file by the job id")
-    @GetMapping("/{jobId}/download")
-    CompletionStage<ResponseEntity<?>> downloadFile(@PathVariable("jobId") Long jobId);
+    @GetMapping("/{job-id}/download")
+    CompletionStage<ResponseEntity<?>> downloadFile(@PathVariable("job-id") Long jobId);
 }

@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8083
 
 spring:
   jpa:
@@ -17,7 +17,10 @@ spring:
     user: coding_task_user
     password: coding_task
 
-
 exported:
   file:
     directory: "src/main/resources/export"
+
+logging:
+  level:
+    root: INFO

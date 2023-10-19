@@ -5,16 +5,14 @@ import app.main.dto.SectionDTO;
 import app.main.service.SectionService;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 public class SectionController implements SectionEndpoint {
 
     private final SectionService sectionService;
-
-    public SectionController(SectionService sectionService) {
-        this.sectionService = sectionService;
-    }
 
     @Override
     public CompletionStage<SectionDTO> createSection(SectionDTO sectionDTO) {

@@ -5,9 +5,9 @@ import app.main.dto.SectionDTO;
 import app.main.entity.GeologicalClass;
 import app.main.entity.Section;
 import java.util.List;
-import org.springframework.stereotype.Component;
+import lombok.experimental.UtilityClass;
 
-@Component
+@UtilityClass
 public class ConvertToEntity {
 
     public static Section convertSectionToVO(SectionDTO sectionDTO) {

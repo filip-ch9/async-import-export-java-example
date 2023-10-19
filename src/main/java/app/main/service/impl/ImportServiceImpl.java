@@ -23,19 +23,22 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import static app.main.converter.ConvertToDTO.convertListToSectionDto;
 import static app.main.converter.ConvertToDTO.convertToAsyncJobDTO;
 
-@Component
+@Service
+@RequiredArgsConstructor
 public class ImportServiceImpl implements ImportService {
 
     private final JobRepository jobRepository;
@@ -51,16 +54,6 @@ public class ImportServiceImpl implements ImportService {
 
     private final Logger logger = Logger.getLogger(ImportServiceImpl.class.getName());
 
-    public ImportServiceImpl(JobRepository jobRepository,
-                             SectionRepository sectionRepository,
-                             GeologicalClassRepository geologicalClassRepository,
-                             JobToSectionRepository jobToSectionRepository) {
-        this.jobRepository = jobRepository;
-        this.sectionRepository = sectionRepository;
-        this.geologicalClassRepository = geologicalClassRepository;
-        this.jobToSectionRepository = jobToSectionRepository;
-    }
-
     @Override
     public CompletableFuture<AsyncJobDTO> parseXslAndReturnJobId(MultipartFile file) {
         CompletableFuture<AsyncJobDTO> future = new CompletableFuture<>();
@@ -71,7 +64,13 @@ public class ImportServiceImpl implements ImportService {
         job.setJobType("IMPORT");
         jobRepository.save(job);
 
+        startImportAsync(file, job);
 
+        future.complete(convertToAsyncJobDTO(job, null));
+        return future;
+    }
+
+    private void startImportAsync(MultipartFile file, Job job) {
         CompletableFuture.runAsync(() -> {
             try (InputStream inputStream = file.getInputStream()) {
                 Workbook workbook = new XSSFWorkbook(inputStream);
@@ -81,17 +80,15 @@ public class ImportServiceImpl implements ImportService {
                 job.setStatus(JobStatus.DONE);
             } catch (IOException e) {
                 job.setStatus(JobStatus.ERROR);
-                logger.warning("ImportServiceImpl class threw error " + e.getMessage());
+                logger.log(Level.WARNING, "ImportServiceImpl class threw error {}", e.getMessage());
             } finally {
                 job.setEndTime(LocalDateTime.now());
                 jobRepository.save(job);
             }
         }, threadPool);
-        var endTime = Objects.nonNull(job.getEndTime()) ? job.getEndTime() : null;
-        future.complete(convertToAsyncJobDTO(job, endTime));
-        return future;
     }
 
+    @Override
     public CompletableFuture<ParsingResultDTO> getImportStatus(Long jobId) {
         return CompletableFuture.supplyAsync(() ->
             sectionRepository.findAllByJobType(jobId)

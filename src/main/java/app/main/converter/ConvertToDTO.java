@@ -2,7 +2,6 @@ package app.main.converter;
 
 import app.main.dto.AsyncJobDTO;
 import app.main.dto.GeologicalClassDTO;
-import app.main.dto.ParsingResultDTO;
 import app.main.dto.SectionDTO;
 import app.main.entity.GeologicalClass;
 import app.main.entity.Job;
@@ -10,9 +9,9 @@ import app.main.entity.Section;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-import org.springframework.stereotype.Component;
+import lombok.experimental.UtilityClass;
 
-@Component
+@UtilityClass
 public class ConvertToDTO {
 
     public static SectionDTO convertSectionToDto(Section section) {

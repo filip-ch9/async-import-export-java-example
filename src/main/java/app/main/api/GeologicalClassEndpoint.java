@@ -3,6 +3,7 @@ package app.main.api;
 import app.main.dto.GeologicalClassDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.concurrent.CompletionStage;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,6 @@ public interface GeologicalClassEndpoint {
                                                                 @RequestBody GeologicalClassDTO geologicalClassDTO);
 
     @Operation(summary = "Delete geological class", description = "Delete geological by id")
-    @RequestMapping("/{geological-class-id}/delete")
+    @DeleteMapping("/{geological-class-id}/delete")
     CompletionStage<Boolean> deleteGeologicalClass(@PathVariable("geological-class-id") Long geologicalClassId);
 }

@@ -3,9 +3,7 @@ package app.main.service;
 import app.main.dto.SectionDTO;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import org.springframework.stereotype.Service;
 
-@Service
 public interface SectionService {
 
     CompletableFuture<SectionDTO> getSection(Long id);

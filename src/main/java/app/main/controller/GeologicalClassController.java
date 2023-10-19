@@ -4,16 +4,14 @@ import app.main.api.GeologicalClassEndpoint;
 import app.main.dto.GeologicalClassDTO;
 import app.main.service.GeologicalClassService;
 import java.util.concurrent.CompletionStage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 public class GeologicalClassController implements GeologicalClassEndpoint {
 
     private final GeologicalClassService geologicalClassService;
-
-    public GeologicalClassController(GeologicalClassService geologicalClassService) {
-        this.geologicalClassService = geologicalClassService;
-    }
 
     @Override
     public CompletionStage<GeologicalClassDTO> createGeologicalClass(GeologicalClassDTO geologicalClassDTO) {
