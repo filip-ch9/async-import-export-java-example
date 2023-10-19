@@ -1,6 +1,6 @@
 # Introduction
 
-Welcome to the Java 17 REST service that provides CRUD operations along with asynchronous import and export capabilities.
+Simple REST service that provides CRUD operations along with asynchronous import and export capabilities.
 
 ## Table of Contents
 
