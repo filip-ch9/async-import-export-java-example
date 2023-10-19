@@ -36,7 +36,7 @@ public class ConvertToDTO {
     }
 
     public static GeologicalClassDTO convertGeologicalClassToDto(GeologicalClass geologicalClass) {
-        Long id = Objects.nonNull(geologicalClass.getSection().getId()) ? geologicalClass.getSection().getId() : null;
+        Long id = Objects.nonNull(geologicalClass.getSection()) ? geologicalClass.getSection().getId() : null;
         return new GeologicalClassDTO(geologicalClass.getName(), geologicalClass.getCode(), id);
     }
 
