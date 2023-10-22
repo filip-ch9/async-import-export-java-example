@@ -4,17 +4,22 @@ import app.main.dto.SectionDTO;
 import app.main.service.SectionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class SectionControllerTest {
 
     @Mock
@@ -22,11 +27,6 @@ class SectionControllerTest {
 
     @InjectMocks
     private SectionController sectionController;
-
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     void testCreateSection() {
@@ -39,6 +39,7 @@ class SectionControllerTest {
         CompletableFuture<SectionDTO> result = sectionController.createSection(sectionDTO)
                 .toCompletableFuture();
         assertEquals(sectionDTO, result.join());
+        verify(sectionService, Mockito.times(1)).saveSection(sectionDTO);
     }
 
     @Test
@@ -53,6 +54,7 @@ class SectionControllerTest {
         CompletableFuture<SectionDTO> result = sectionController.fetchSection(sectionId)
                 .toCompletableFuture();
         assertEquals(sectionDTO, result.join());
+        verify(sectionService, Mockito.times(1)).getSection(sectionId);
     }
 
     @Test
@@ -66,6 +68,7 @@ class SectionControllerTest {
         CompletableFuture<List<SectionDTO>> result = sectionController.fetchSectionsByGeologicalClassCode(geologicalCode)
                 .toCompletableFuture();
         assertEquals(sectionDTOList, result.join());
+        verify(sectionService, Mockito.times(1)).getAllSectionsByGeologicalCode(geologicalCode);
     }
 
     @Test
@@ -80,6 +83,7 @@ class SectionControllerTest {
         CompletableFuture<SectionDTO> result = sectionController.updateSection(sectionId, sectionDTO)
                 .toCompletableFuture();
         assertEquals(sectionDTO, result.join());
+        verify(sectionService, Mockito.times(1)).updateSection(sectionId, sectionDTO);
     }
 
     @Test
@@ -91,5 +95,6 @@ class SectionControllerTest {
 
         CompletableFuture<Boolean> result = sectionController.deleteSection(sectionId).toCompletableFuture();
         assertTrue(result.join());
+        verify(sectionService, Mockito.times(1)).deleteSection(sectionId);
     }
 }

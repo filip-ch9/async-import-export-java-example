@@ -7,22 +7,23 @@ import app.main.entity.Section;
 import app.main.repository.GeologicalClassRepository;
 import app.main.repository.SectionRepository;
 import app.main.service.impl.SectionServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class SectionServiceImplTest {
 
     @Mock
@@ -33,11 +34,6 @@ class SectionServiceImplTest {
 
     @InjectMocks
     private SectionServiceImpl sectionService;
-
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     void testGetSection() {
